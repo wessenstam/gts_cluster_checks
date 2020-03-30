@@ -63,7 +63,7 @@ def get_json_data(ip_address,get_url,json_data,method,user,passwd,value):
     # Set the right requests based on GET or POST
     if method=="get":
         try:
-            page=requests.get(url,verify=False,auth=(user,passwd))
+            page=requests.get(url,verify=False,auth=(user,passwd),timeout=10)
             page.raise_for_status()
             if value != "":
                 json_data = extract_values(json.loads(page.text), value)

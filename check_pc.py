@@ -179,7 +179,7 @@ def checks_to_run(server_ip,user,passwd):
     if "2.0" not in str(json_search):
         print("Objects has not been updated...")
     # Check Calm version
-    if "2.9.7" not in str(json_search):
+    if "2.9.8" not in str(json_search):
         print("Calm and Epsilon have not been updated...")
     # Check Karbon version
     if "2.0" not in str(json_search):
