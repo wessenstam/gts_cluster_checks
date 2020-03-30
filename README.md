@@ -56,3 +56,7 @@ a) Are the apps running? We check:
     1) Citrix Infra
     2) Era Server
     3) KarbonClusterDeployment
+    
+Force Karbon image download
+----------------
+Sometimes the Karbon BP isn't able to download the Karbon Image. To force the Karbon image to download use this script. I uses the information from the cluster.txt file. Run using ``python3 karbon_download.py``. This will check for the image ntnx-04 available. If not it tells Karbon to download the image.
