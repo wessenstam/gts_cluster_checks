@@ -182,7 +182,7 @@ def checks_to_run(server_ip,user,passwd,app,bp,vm):
                         # print("COOKIES={0}".format(resp.cookies['NTNX_IGW_SESSION']))
                         cookies = {'NTNX_IGW_SESSION': resp.cookies['NTNX_IGW_SESSION']}
                         # Open the connection to the Karbon server before moving on...
-                        url = "https://" + server_ip_pc + ":7050/karbon/acs/image/portal/list"
+                        url = "https://" + server_ip_pc + ":7050/karbon/public/static/js/main.bb724a21.js"
                         try:
                             resp = requests.get(url, cookies=cookies, headers=headers, verify=False, timeout=10)
                         except requests.exceptions.RequestException as err:
