@@ -105,7 +105,7 @@ def checks_to_run(server_ip,user,passwd):
 urllib3.disable_warnings()
 
 # Use a file with parameters to run the checks
-file=open("cluster1.txt","r")
+file=open("cluster.txt","r")
 file_line=file.readlines()
 for line in file_line:
     if "#" not in line:

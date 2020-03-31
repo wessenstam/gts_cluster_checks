@@ -165,6 +165,45 @@ def checks_to_run(server_ip,user,passwd,app,bp,vm):
                 json_search = get_json_data(server_ip_pc, url, payload, method, user, passwd, value)
             # *******************************************************************************************
 
+            # If Karbon, make sure the Karbon API is responding before we move on....
+            payload = {"length": 100}
+            headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+            # Set the address and make images call to get the cookies
+            # We don't actually do anything with this call other than get cookies
+            if "Karbon" in app:
+                url = "https://" + server_ip_pc + ":9440/api/nutanix/v3/images/list"
+                print("Detected Karbon app Routine...")
+                try:
+                    resp = requests.post(url, data=json.dumps(payload), headers=headers, auth=(user,passwd),
+                                         verify=False, timeout=10)
+                    # If the call went through successfully
+                    if resp.ok:
+                        # Set the cookie so we canmove forward to Karbon
+                        # print("COOKIES={0}".format(resp.cookies['NTNX_IGW_SESSION']))
+                        cookies = {'NTNX_IGW_SESSION': resp.cookies['NTNX_IGW_SESSION']}
+                        # Open the connection to the Karbon server before moving on...
+                        url = "https://" + server_ip_pc + ":7050/karbon/acs/image/portal/list"
+                        try:
+                            resp = requests.get(url, cookies=cookies, headers=headers, verify=False, timeout=10)
+                        except requests.exceptions.RequestException as err:
+                            print("OOps Error: Something Else", err)
+                        except requests.exceptions.HTTPError as errh:
+                            print("Http Error:", errh)
+                        except requests.exceptions.ConnectionError as errc:
+                            print("Error Connecting:", errc)
+                        except requests.exceptions.Timeout as errt:
+                            print("Timeout Error:", errt)
+                            print("We are unable to get to the Karbon Server.....")
+                except requests.exceptions.RequestException as err:
+                    print("OOps Error: Something Else", err)
+                except requests.exceptions.HTTPError as errh:
+                    print("Http Error:", errh)
+                except requests.exceptions.ConnectionError as errc:
+                    print("Error Connecting:", errc)
+                except requests.exceptions.Timeout as errt:
+                    print("Timeout Error:", errt)
+                    print("We are unable to get to the Karbon Server.....")
+
             # The app can be launched from the BP.
             url = "api/nutanix/v3/blueprints/" + bp_uuid + "/simple_launch"
             payload = '{"spec":{"app_name":"'+app_name+'","app_description":"","app_profile_reference":{"kind":"app_profile","name":"Nutanix","uuid":"' + app_prof_uuid + '"}}}'

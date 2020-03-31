@@ -59,4 +59,4 @@ a) Are the apps running? We check:
     
 Force Karbon image download
 ----------------
-Sometimes the Karbon BP isn't able to download the Karbon Image. To force the Karbon image to download use this script. I uses the information from the cluster.txt file. Run using ``python3 karbon_download.py``. This will check for the image ntnx-04 available. If not it tells Karbon to download the image.
+Sometimes the Karbon BP isn't able to download the Karbon Image. To force the Karbon image to download use this script. It uses the information from the cluster.txt file. Run using ``python3 karbon_download.py``. This will check for the image to be available. If not it tells Karbon to download the image if the Karbon version is 2.x. If it is not this version it throws an error message and continues to the next cluster.
